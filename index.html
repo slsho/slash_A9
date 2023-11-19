@@ -1,23 +1,44 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-    <meta charset="UTF-8">
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What Cake are you? Personality Quiz</title>    
 <style>
   
       body {
         font-family: "Arial", sans-serif;
         font-size: 20px;
+        background-color: #FCFBF4;
       }
-     .subtitle {
-        font-size: 15px;
+  
+  .header {
+    background-color: #F3D1DC; 
+    color: #B16E46;
+    padding: 20px;
+    text-align: center;
+}
+  
+  .subtitle {
+        font-size: 20px;
         font-style: italic;
+       	text-align: center;
       }
 
+  .footer {
+            background-color: #F3D1DC; 
+            color: #B16E46;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
   /* this style just aligns answers vertically */
   .choice { display: block; }
 </style>
 </head>
+<br>
 <body>
 <p>
 <script> 
@@ -50,9 +71,10 @@
         ];
         var always_show = false;
     </script>
-
-    <h1>What Cake are you?</h1>
+<div class="header">
+  <h1>What Cake are you?</h1>
   <p class="subtitle">A Personality Quiz by Sophia Ho</p>
+    </div>
 
     <ol>
         <!-- Question 1 -->
@@ -181,6 +203,7 @@
         <!-- Submit Button -->
         <button type="button" onclick="select()">Discover Your Result!</button>
     </p>
+  <br>
     <div id="incomplete">
         <p>You have not answered all of the questions yet.</p>
     </div>
@@ -335,4 +358,7 @@ function select() {
 }
 // ]]></script>
 </body>
+    <div class="footer">
+        &copy; 2023 slsho. All rights reserved.
+    </div>
 </html>
