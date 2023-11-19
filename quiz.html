@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html><head>
+<title>TO DO: Your Quiz Name</title>    
+<style>
+
+  /* this style just aligns answers vertically */
+  .choice { display: block; }
+</style>
+</head>
+<body>
+<p>
+<script>// <![CDATA[
+/************************************************************************************
+
+  This is how you enter the weights for each possible question / answer / result:
+
+  q: question #
+  a: answer #
+  r: result #
+  
+  for example, q1a2r3 determines how r3's score is affected if a2 is picked for q1
+
+var weights = [
+  [[q1a1r1, q1a1r2, q1a1r3, ... q1a1r?], [q1a2r1, q1a2r2, ...], [q1a?s1, ...]],
+  [[q2a1r1, q2a1r2, ...], [q2a2r1, ...], [q2a?r1, ...]],
+  ...
+  [[q?a1r1, q?a1r2, ...], [q?a2r1, ...], [q?a?r1, ...]]
+]
+
+*************************************************************************************/
+
+/****************
+WEIGHTS GO BELOW
+*****************/
+
+var weights = [
+  // Question 1
+  [[-2, 10, -10, 2, 6], [6, -2, 10, -6, 3], [10, -6, 8, 2, -10], [3, -1, 6, 10, -7], [-8, -4, 5, 3, 10]],
+  
+  // Question 2
+  [[-6, 10, -9, -7, 2], [-2, 3, -5, -5, 10], [10, 5, 7, -10, 4], [-9, -2, -8, 10, -10]]
+]
+
+/*
+  If you want to see all of the possible results at the same time,
+  (to help you edit your page) modify the following to be:
+  var always_show = true
+  
+  To make the page work properly, it should be:
+  var always_show = false
+*/
+
+var always_show = false
+// ]]></script>
+</p>
+<p>TO DO: You are expected to make this web page not just interactive, but also very pretty.</p>
+<p>Motivation Text.... (e.g., Which Harry Potter character are you?)</p>
+<ol><!------------------
+QUESTIONS GO BELOW
+----------------------> <!--Question 1-->
+<li>What do you prefer to do in your spare time? <label class="choice"><input type="radio" name="q1" value="a1">Reading</label> <label class="choice"><input type="radio" name="q1" value="a2">Eating</label> <label class="choice"><input type="radio" name="q1" value="a3">Play pranks</label> <label class="choice"><input type="radio" name="q1" value="a4">Trolling</label> <label class="choice"><input type="radio" name="q1" value="a5">Visit family</label> <!--Question 2--></li>
+<li>Which Hogwarts subject would be your favourite? <label class="choice"><input type="radio" name="q2" value="a1">Arithmancy</label> <label class="choice"><input type="radio" name="q2" value="a2">Herbology</label> <label class="choice"><input type="radio" name="q2" value="a3">Defence Against the Dark Arts</label> <label class="choice"><input type="radio" name="q2" value="a4">Potions</label></li>
+</ol>
+<p><!--Submit Button--> <button type="button" onclick="select()">Click here ... (TO DO... change this text)</button></p>
+<div id="incomplete">
+<p>You have not answered all of the questions yet.</p>
+</div>
+<p><!---------------
+RESULTS GO BELOW
+------------------> <!--Result 1--></p>
+<div id="r1">
+<p>You are Harry Potter. You are the charismatic leader of your group. You also have a heart of gold, and you will always fight for what's right. Secretly you really enjoy privacy, but your life doesn't allow you to get much of it.</p>
+</div>
+<p><!--Result 2--></p>
+<div id="r2">
+<p>You are Hermione Granger. You are the calm and rational mind amongst your group of friends. You are very studious and always plan things carefully. Because of this, friends will always come to you for advice.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/en/d/d3/Hermione_Granger_poster.jpg"></p>
+</div>
+<p><!--Result 3--></p>
+<div id="r3">
+<p>You are Ron Weasley. You love your family (despite saying otherwise) and are fiercely loyal to them as well as your friends. You don't care much about grades and care more about having fun with your mates.</p>
+</div>
+<p><!--Result 4--></p>
+<div id="r4">
+<p>You are Draco Malfoy. You are frequently misunderstood by those around you. Though to both your friends and enemies you appear to be very self-assured, this is only a façade. Deep down inside you are very unsure with yourself.</p>
+</div>
+<p><!--Result 5--></p>
+<div id="r5">
+<p>You are Neville Longbottom. You are very quiet and reserved and often spend time by yourself with your pet. However, you do enjoy the company of friends and often find that their support allows you to do things you didn't know you could.</p>
+</div>
+<p>
+<script>// <![CDATA[
+/**********************************************
+ Do not edit the following code unless you are comfortable with JavaScript.
+ **********************************************/
+
+var verbose = true
+
+var num_selections = 0
+while (1) {
+  var e = document.getElementById('r' + (num_selections + 1))
+  if (e === null) break
+  ++num_selections
+}
+if (num_selections == 0) window.alert('unexpected: no section ids (r1, r2, etc.)')
+if (verbose) console.log('num_selections = ' + num_selections)
+
+num_questions = 0
+while (1) {
+  var e = document.getElementsByName('q' + (num_questions + 1))
+  if (e.length == 0) break
+  ++num_questions
+  if (e.length < 2) window.alert('unexpected: q' + num_questions + ' has less than 2 answers')
+}
+if (num_questions == 0) window.alert('unexpected: no question names (q1, q2, etc.)')
+if (verbose) console.log('num_questions = ' + num_questions)
+
+function hide_selections() {
+  if (!always_show) {
+    if (verbose) console.log('hide_selections()')
+    document.getElementById('incomplete').style.display = 'none'
+    for (var s=1; s <= num_selections; ++s) {
+      document.getElementById('r' + s).style.display = 'none'
+    }
+  }
+}
+
+hide_selections()
+
+function select() {
+  if (verbose) console.log('select()')
+  hide_selections()
+  var incomplete = false  
+  var scores = new Array(num_selections)
+  for (var s = 1; s <= num_selections; ++s) scores[s-1] = 0
+  for (var q = 1; q <= num_questions; ++q) {
+    var answers = document.getElementsByName('q' + q)
+    var choice = false
+    for (var a = 0; a < answers.length; ++a) {
+      if (answers[a].checked) {
+        choice = answers[a].value
+        break
+      }
+    }
+    if (choice === false) {
+      incomplete = true
+      break
+    }
+    if (verbose) console.log('q' + q + ': answer = ' + choice)
+    var answer = choice.substr(1)
+    for (var s = 1; s <= num_selections; ++s) {
+      var w = weights[q-1][answer-1][s-1]
+      if (typeof w === 'undefined') window.alert('error: could not find weight for q' + q + 'a' + answer + 'r' + s)
+      scores[s-1] += w
+      if (verbose) console.log('score[' + s + '] += ' + w) 
+    }
+  }
+  if (incomplete) {
+    if (verbose) console.log('incomplete')
+    document.getElementById('incomplete').style.display = 'block'
+  } else {
+    var maxscore = Number.MIN_VALUE
+    var pick = 0
+    for (var s = 1; s <= num_selections; ++s) {
+      if (verbose) console.log('score[' + s + '] == ' + scores[s-1])
+      if (scores[s-1] > maxscore) {
+        pick = s
+        maxscore = scores[s-1]
+      }
+    }
+    if (verbose) console.log('pick = r' + pick)
+    document.getElementById('r' + pick).style.display = 'block'
+  }
+}
+// ]]></script>
+</p>
+</body></html>
